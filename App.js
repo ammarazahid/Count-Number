@@ -8,35 +8,35 @@ class App extends Component {
     super();
     this.start = this.start.bind(this);
     this.stop = this.stop.bind(this);
-    this.changeNumber = this.changeNumber.bind(this);
 
 
     this.state = {
-      numb: 4,
+      numb: 0,
       isStarted: false
     }
+    this.interval = null
   }
   
   start() {
+    this.interval = setInterval(() => {
+      this.setState({
+        numb: parseInt(Math.random() * 10)
+      })
+  
+    }, 1000)
     this.setState({
       isStarted: true
     })
   }
   
   stop() {
+    clearInterval(this.interval)
     this.setState({
+      
       isStarted: false
     });
   }
 
-  changeNumber() {
-    setInterval(() => {
-    this.setState({
-      numb: parseInt(Math.random() * 10)
-    })
-
-  }, 1000)
-  }
   
   render() {
     return (
@@ -45,7 +45,6 @@ class App extends Component {
         {
           this.state.isStarted === false ? <button onClick={this.start}>Start</button> : <button onClick={this.stop}>Stop</button>
         }
-        <button onClick={this.changeNumber}>Change number</button>
       </div>
     );
   }
